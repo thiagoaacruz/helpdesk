@@ -1,20 +1,45 @@
 package com.thiago.helpdesk.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 import com.thiago.helpdesk.domain.enums.Perfil;
 
-public abstract class Pessoa {
 
+@Entity //criando uma tabela no banco de dados, nesse caso a tabela irá com o nome da classe, porque não atribuí um nome especifico
+public abstract class Pessoa implements Serializable { //implements Serializable = (Esse comando serve para criar uma sequencia de bytes para ser trafegados em rede)
+	
+	private static final long serialVersionUID = 1L;// Esse comando faz referência ao (implements Serializable) 
+	
+	@Id //informando que o atributo é uma chave primaria
+	@GeneratedValue(strategy = GenerationType.IDENTITY)// Comando que irá informar que a chave irá ser criada de forma automática, e quem irá criar será o banco de dados
 	protected Integer id;
 	protected String nome;
+	
+	@Column(unique = true)//Esse comando informa que a coluna cpf será única no banco de dados
 	protected String cpf;
+	
+	@Column(unique = true)//Esse comando informa que a coluna email será única no banco de dados
 	protected String email;
+	
 	protected String senha;
+	
+	
+	@ElementCollection(fetch = FetchType.EAGER)// esse comando informa que que será uma coleção do tipo Integer, e quando der um get no banco de dados essa lista irá vir com o usuário
+	@CollectionTable(name = "PERFIS") //Com esse comando vai ter uma tabela no banco de dados com apenas os perfis										
 	
 	protected Set<Integer> perfis = new HashSet<>(); //Criando um lista para armazenamento dos perfis(porque poder ser um cliente ou um tecnico)
 	//new HashSet = (Evita iniciar o ponteiro em nulo em ponteiro exception)		

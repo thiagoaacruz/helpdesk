@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.thiago.helpdesk.domain.enums.Perfil;
 
 
@@ -45,6 +46,7 @@ public abstract class Pessoa implements Serializable { //implements Serializable
 	//new HashSet = (Evita iniciar o ponteiro em nulo em ponteiro exception)		
 	//Set = (não deixa dois valores iguais na lista, EX: não deixa dois clientes para mesma pessoa ou dois tecnicos para mesma pessoa)
 	
+	@JsonFormat(pattern = "dd/MM/yy") //Criando o padrão da data para receber do banco de dados
 	protected LocalDate dataCriacao = LocalDate.now();// LocalDate.now(); = (Esse comando pega o momento que a instancia foi criada)
 	//LocalDate = (esse comando pega o data/mes/ano)
 	

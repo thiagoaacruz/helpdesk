@@ -3,10 +3,19 @@ package com.thiago.helpdesk.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+
+import com.thiago.helpdesk.domain.enums.Perfil;
+
+
+@Entity
 public class Tecnico extends Pessoa {
 	
+	private static final long serialVersionUID = 1L;
 	
-	private List<Chamado> chamados =  new ArrayList<>();//criando uma lista de chamados
+	@OneToMany(mappedBy = "tecnico")//Nesse comando crio a referência com a classe "Chamado", que tem o comando  @JoinColumn(name = "tecnico_id")
+	private List<Chamado> chamados =  new ArrayList<>();//Esse comando faz referência ao extends 
 
 	
 	
@@ -14,6 +23,7 @@ public class Tecnico extends Pessoa {
 	//construtor padrão da super classe
 	public Tecnico() {
 		super();
+		addPerfil(Perfil.CLIENTE);//Com esse comando todo item inserido será no minimo cliente.
 		
 	}
 
@@ -21,6 +31,7 @@ public class Tecnico extends Pessoa {
 	//Construtor personalizado da super classe, erdando os atributos de pessoa 
 	public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
 		super(id, nome, cpf, email, senha);
+		addPerfil(Perfil.CLIENTE);//Com esse comando todo item inserido será no minimo cliente.
 		
 	}
 

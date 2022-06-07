@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.thiago.helpdesk.domain.enums.Perfil;
 
 
@@ -14,6 +15,7 @@ public class Tecnico extends Pessoa {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore //esse comando irá ignorar a busca pelo chamado
 	@OneToMany(mappedBy = "tecnico")//Nesse comando crio a referência com a classe "Chamado", que tem o comando  @JoinColumn(name = "tecnico_id")
 	private List<Chamado> chamados =  new ArrayList<>();//Esse comando faz referência ao extends 
 
